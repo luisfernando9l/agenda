@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scroolHeight{
+    height: calc(92dvh - 395px);
+}
+
+.margin-container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .margin-container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .margin-container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .margin-container {
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 1210px) {
+    .margin-container {
+        max-width: 1210px;
+    }
+}

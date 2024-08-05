@@ -1,9 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 
-// import { i18nVue } from 'laravel-vue-i18n'
 import { createApp, h } from 'vue';
-import { createInertiaApp, Link as InertiaLink } from '@inertiajs/vue3';
+import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
@@ -16,12 +15,6 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-			// .use(i18nVue, {
-			// 	resolve: lang => {
-			// 		const langs = import.meta.glob('../../lang/*.json', { eager: true })
-			// 		return langs[`../../lang/${lang}.json`].default
-			// 	},
-			// })
             .component('InertiaLink', InertiaLink)
             .mount(el);
     },
