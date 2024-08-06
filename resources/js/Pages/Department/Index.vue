@@ -100,8 +100,11 @@ onMounted(() =>
                             placeholder="Nome"
                         />
                     </div>
-                    <div class="flex flex-col items-start float-right py-1 xs:w-full sm:w-full md:w-full lg:w-2/12 xl:w-2/12 lg:pl-2 xl:pl-2">
-                        <base-button @click="getDepartments()">
+                    <div class="flex flex-col items-start float-right py-1 lg:pl-2 xl:pl-2">
+                        <base-button
+                            @click="getDepartments()"
+                            class="w-full md:w-fit"
+                        >
                             Buscar
                         </base-button>
                     </div>
@@ -291,6 +294,12 @@ onMounted(() =>
                                                             Nome:
                                                         </span>
                                                         <span>{{department.name}}</span>
+                                                    </div>
+                                                    <div class="flex gap-1">
+                                                        <span class="font-bold">
+                                                            Criado por:
+                                                        </span>
+                                                        <span>{{department.created_by.name}}</span>
                                                     </div>
                                                     <div class="flex gap-1">
                                                         <span class="font-bold">

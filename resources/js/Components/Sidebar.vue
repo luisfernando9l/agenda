@@ -34,15 +34,21 @@ const sideBarItemsClass = computed(() => {
                     :class="sideBarItemsClass"
                     class="flex-grow flex-1 w-full px-2"
                 >
-                    <div class="w-full flex flex-grow flex-1 flex-col items-center justify-start gap-4 py-2">
-                        <inertia-link :href="route('departments')">
-                            Ramais
+                    <div class="w-full flex flex-grow flex-1 flex-col items-start justify-start gap-4 py-2 ml-6 mt-4">
+                        <inertia-link :href="route('extensions')">
+                            <span class="text-xl hover:text-gray-800">
+                                Ramais
+                            </span>
                         </inertia-link>
                         <inertia-link :href="route('departments')">
-                            Departamentos
+                            <span class="text-xl hover:text-gray-800">
+                                Departamentos
+                            </span>
                         </inertia-link>
-                        <inertia-link :href="route('departments')">
-                            Usuários
+                        <inertia-link :href="route('users')">
+                            <span class="text-xl hover:text-gray-800">
+                                Usuários
+                            </span>
                         </inertia-link>
                     </div>
                 </div>

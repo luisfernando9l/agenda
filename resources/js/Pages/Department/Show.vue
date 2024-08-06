@@ -42,7 +42,7 @@ const destroyAlert = (index) => {
                             />
                         </div>
                     </div>
-                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto">
+                    <div class="flex xs:flex-col md:flex-col justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto">
                         <div class="w-full">
                             <base-label
                                 id="name"
@@ -56,6 +56,36 @@ const destroyAlert = (index) => {
                                 id="name"
                                 placeholder="Nome do Departamento"
                             />
+                        </div>
+                        <div class="w-full flex xs:flex-col sm:flex-row gap-2">
+                            <div class="w-full">
+                                <base-label
+                                    id="created_by"
+                                    value="Criado por"
+                                />
+                                <base-input
+                                    disabled
+                                    v-model="department.data.created_by.name"
+                                    :value="department.data.created_by.name"
+                                    type="text"
+                                    id="created_by"
+                                    placeholder="Criado por"
+                                />
+                            </div>
+                            <div class="w-full">
+                                <base-label
+                                    id="created_at"
+                                    value="Data da Criação"
+                                />
+                                <base-input
+                                    disabled
+                                    v-model="department.data.created_at"
+                                    :value="department.data.created_at"
+                                    type="text"
+                                    id="created_at"
+                                    placeholder="Data da Criação"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
