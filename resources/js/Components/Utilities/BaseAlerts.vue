@@ -52,7 +52,7 @@ const handleClick = (index, event) => {
             class="flex relative px-2 py-2 w-full rounded font-bold"
         >
             <div>
-                {{ $t(alert.message) }}
+                {{ alert.message }}
             </div>
             <button
                 @click="handleClick(index, $event)"

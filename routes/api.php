@@ -1,6 +1,7 @@
 <?php
-use App\Http\Controllers\ManageUsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\Api\ResetPasswordController;
 
 Route::prefix('auth')->group(function () {
@@ -20,4 +21,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::patch('/users/{user}', [UserController::class, 'update'])->name('api.users.update');
     // Route::post('/users/{user}/reset-password', [UserController::class, 'resetPasswordUser'])->name('api.user.password.reset');
     // Route::get('/users/{user}/subscriptions', [UserController::class, 'getSubscriptions'])->name('api.user.subscriptions');
+
+
+    Route::post('departments', [DepartmentController::class, 'store'])->name('api.department.store');
+    Route::get('department/{department}', [DepartmentController::class, 'show'])->name('api.department.show');
+    Route::put('department/{department}', [DepartmentController::class, 'update'])->name('api.department.update');
+    Route::get('departments', [DepartmentController::class, 'getDepartments'])->name('api.department.list');
+    Route::delete('department/{department}', [DepartmentController::class, 'destroy'])->name('api.department.destroy');
 });

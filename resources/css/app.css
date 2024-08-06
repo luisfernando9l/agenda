@@ -14,6 +14,20 @@
     padding-left: 1.5rem;
 }
 
+.slide-fade-enter-active {
+    transition: all 0.5s ease-in;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.5s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
 @media (min-width: 640px) {
     .margin-container {
         max-width: 640px;

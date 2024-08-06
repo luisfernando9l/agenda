@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Department;
+use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\DepartmentResource;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $service;
+
+    public function __construct(DepartmentService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        //
+        // Gate::authorize('list', Department::class);
+        return Inertia::render('Department/Index');
     }
 
     /**
@@ -22,7 +32,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        // Gate::authorize('newDepartment', User::class);
+        return Inertia::render('Department/Create');
     }
 
     /**
@@ -30,7 +41,11 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request)
     {
-        //
+        // Gate::authorize('newDepartment, User::class);
+        if($this->service->store($request)){
+            return redirect()->route('departments')->withSuccess("Departamento criado com sucesso");
+        }
+        return redirect()->back()->withError("Erro ao criar departamento");
     }
 
     /**
@@ -38,7 +53,10 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        // Gate::authorize('viewDepartment', $user);
+        return Inertia::render('Department/Show')->with([
+            'department' => DepartmentResource::make($department)
+        ]);
     }
 
     /**
@@ -46,7 +64,10 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        // Gate::authorize('updateDepartment', $user);
+        return Inertia::render('Department/Edit')->with([
+            'department' => DepartmentResource::make($department)
+        ]);
     }
 
     /**
@@ -54,7 +75,11 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        //
+        // Gate::authorize('updateDepartment', $user);
+        if($this->service->update($request, $department)){
+            return redirect()->route('departments')->withSuccess("Departamento criado com sucesso");
+        }
+        return redirect()->back()->withError("Erro ao atualizar departamento");
     }
 
     /**
@@ -62,6 +87,10 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        // Gate::authorize('updateDepartment', $user);
+        if($this->service->destroy($department)){
+            return redirect()->route('departments')->withSuccess("Departamento deletado com sucesso");
+        }
+        return redirect()->back()->withError("Erro ao deletar departamento");
     }
 }
