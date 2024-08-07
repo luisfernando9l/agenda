@@ -1,21 +1,30 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## About Laravel
+## Tecnologias Utilizadas
 
------Tecnologias Utilizadas-----
-Docker
-Compose
-Laravel 11
-Php 8.3
-MySql
-Vue 3 (Composition Api)
-Inertia
-Tailwind
-Vite
-Axios
+Docker,
+
+Compose,
+
+Laravel 11,
+
+Php 8.3,
+
+MySql,
+
+Vue 3 (Composition Api),
+
+Inertia,
+
+Tailwind,
+
+Vite,
+
+Axios.
 
 
------Como rodar o projeto-----
+## Como rodar o projeto
+
 Com o docker instalado e o projeto aberto rode:
 
 docker-compose build
