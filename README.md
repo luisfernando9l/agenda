@@ -35,6 +35,8 @@ docker-compose exec app composer install
 
 docker-compose exec node npm install
 
+docker-compose exec node npm run dev
+
 docker-compose exec app php artisan migrate:fresh --seed
 
 Agora só abrir o Localhost, para abrir o banco localhost:81
