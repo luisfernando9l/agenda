@@ -22,7 +22,7 @@ class StoreExtensionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => ['required', 'string', 'max:255', 'unique:extensions,number'],
+            'number' => ['required', 'string', 'max:20', 'unique:extensions,number'],
             'user_id' => ['required', 'exists:users,id'],
         ];
     }

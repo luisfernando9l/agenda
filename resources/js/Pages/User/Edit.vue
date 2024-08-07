@@ -12,11 +12,12 @@ import { ref, onMounted } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 
 const page = usePage()
-const title = ref('Criar Usuário')
+const title = ref('Editar Usuário')
 let alerts = ref([])
 
 const props = defineProps({
-    departments: { type: Object, required: true }
+    departments: { type: Object, required: true },
+    user: { type: Object, required: true }
 })
 
 const form = useForm({
@@ -51,9 +52,13 @@ const clearAlerts = () => {
     alerts.value = []
 }
 
-onMounted(() =>
+onMounted(() => {
     getFlashAlerts()
-)
+    form.id = props.user.data.id
+    form.name = props.user.data.name
+    form.email = props.user.data.email
+    form.department_id = props.user.data.department_id ? props.user.data.department_id : ''
+})
 </script>
 <template>
     <app-layout>

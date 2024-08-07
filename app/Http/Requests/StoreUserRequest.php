@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateExtensionRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +24,10 @@ class UpdateExtensionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => [
-                'required',
-                'string',
-                'max:20',
-                Rule::unique('extensions', 'number')->ignore($this->id)
-            ],
-            'user_id' => ['required', 'exists:users,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:200', Rule::unique('users', 'email')],
+            'department_id' => ['required', 'exists:departments,id'],
+            // 'level_id' => ['required', 'exists:levels,id'],
         ];
     }
 }
