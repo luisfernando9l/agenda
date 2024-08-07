@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        Department::create(['id' => 1, 'name' => 'TI', 'created_by' => 1]);
+        Department::create(['id' => 1, 'name' => 'Tecnologia da informação', 'created_by' => 1]);
         Department::create(['id' => 2, 'name' => 'Recursos Humanos', 'created_by' => 1]);
         Department::create(['id' => 3, 'name' => 'Financeiro', 'created_by' => 1]);
         Department::create(['id' => 4, 'name' => 'Marketing', 'created_by' => 1]);
