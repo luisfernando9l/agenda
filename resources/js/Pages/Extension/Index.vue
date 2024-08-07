@@ -6,12 +6,15 @@ import BaseInput from '@/Components/Utilities/BaseInput.vue'
 import BaseLabel from '@/Components/Utilities/BaseLabel.vue'
 import BaseAlerts from '@/Components/Utilities/BaseAlerts.vue'
 import LoadingCircle from '@/Components/Icons/LoadingCircle.vue'
+import DialogModal from '@/Components/Utilities/DialogModal.vue'
 import Dots from '@/Components/Icons/Dots.vue'
 import axios from 'axios'
 import debounce from 'lodash/debounce'
 import Paginator from '@/Components/Utilities/Paginator.vue'
+import ArrowLeft from '@/Components/Icons/ArrowLeft.vue'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
 import { ref, onMounted } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { usePage, router } from '@inertiajs/vue3'
 
 const page = usePage()
 let loading = ref(true)
@@ -21,6 +24,7 @@ let search = ref({ number: '', owner: '', department: '' })
 let selected_extension = ref(null)
 let extensions = ref({})
 let dropdown_options = ref({ index : '', show : false})
+let show_modal_delete = ref(false)
 
 const getExtensions = debounce(async function(url=1, success=false){
     loading.value = true
@@ -52,6 +56,37 @@ const getFlashAlerts =() => {
     }else{
         clearAlerts()
     }
+}
+
+const confirmDelete = async () => {
+    loading.value = true
+    clearAlerts()
+    router.delete(route('extension.destroy', selected_extension.value.id ), {
+        onSuccess: async () => {
+            getExtensions(),
+            getFlashAlerts(),
+            show_modal_delete.value = false
+            selected_extension.value = null
+        },
+        onError: (errors) => {
+            loading.value = false
+            clearAlerts()
+            alerts.value = []
+            for(let error in errors){
+                if(errors[error].data !== undefined){
+                    if(errors[error].status == 500 || errors[error].status == 422){
+                        alerts.value.push({type: "error", message:"Erro ao deletar, contate o time de desenvolvimento."})
+                    }else if(errors[error].status == 300 || errors[error].status == 403){
+                        alerts.value.push({type: "error", message: "Você não tem permissão para realizar essa ação."})
+                    }
+                }
+            }
+            selected_extension.value = null
+            show_modal_delete.value = false
+            dropdown_options.value.index = ''
+            dropdown_options.value.show = false
+        }
+    })
 }
 
 const show_options = (index) => {
@@ -87,10 +122,9 @@ onMounted(() =>
         <template #header>
             <margin-layout>
                 <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-2">
-                    <div class="flex flex-col md:flex-row w-full justify-between">
+                    <div class="flex flex-row w-full justify-between">
                         <inertia-link
                             :href="route('extension.create')"
-                            class="xs:w-full md:w-auto justify-start items-start"
                         >
                             <base-button
                                 aria-label="new_button"
@@ -157,7 +191,7 @@ onMounted(() =>
                         </base-button>
                     </div>
                 </div>
-                <div class="mt-8 h-full">
+                <div class="mt-8 h-full mb-20">
                     <div v-if="!loading">
                         <base-alerts
                             :alerts="alerts"
@@ -167,7 +201,7 @@ onMounted(() =>
                             v-if="extensions.data.length > 0"
                             class="min-h-0 space-y-4"
                         >
-                            <table class="w-full border-gray-200 shadow xs:hidden md:table sm:rounded-lg overflow-hidden">
+                            <table class="w-full border-gray-200 shadow xs:hidden md:table sm:rounded-lg overflow-auto relative">
                                 <tr class="bg-gray-100 th_rows">
                                     <th class="th">
                                         Ramal
@@ -197,7 +231,7 @@ onMounted(() =>
                                         {{extension.user_owner.department}}
                                     </td>
                                     <td class="td">
-                                        <div class="inline-block text-left relative">
+                                        <div class="inline-block text-left">
                                             <button
                                                 @click="show_options(index)"
                                                 type="button"
@@ -214,7 +248,7 @@ onMounted(() =>
                                             <transition name="slide-fade">
                                                 <div
                                                     v-show="dropdown_options.show && dropdown_options.index === index"
-                                                    class="absolute -mt-6 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg right-5 ring-1 ring-black ring-opacity-5 focus:outline-none" 
+                                                    class="absolute z-30 -mt-6 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg right-5 ring-1 ring-black ring-opacity-5 focus:outline-none"
                                                     role="menu"
                                                     aria-orientation="vertical"
                                                     aria-labelledby="menu-button"
@@ -269,7 +303,7 @@ onMounted(() =>
                                     <li
                                         v-for="(extension, index) in extensions.data"
                                         :key="index"
-                                        class="p-3 bg-gray-100 border-b rounded border-gray-cygni relative"
+                                        class="p-3 bg-gray-100 border-b rounded relative"
                                     >
                                         <div>
                                             <div class="flex justify-end mb-2 absolute top-1 right-1.5">
@@ -289,7 +323,7 @@ onMounted(() =>
                                                 <transition name="slide-fade">
                                                     <div 
                                                         v-show="dropdown_options.show && dropdown_options.index === index" 
-                                                        class="absolute z-30 bg-white divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none right-3 top-1"
+                                                        class="flex flex-col items-center absolute z-30 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none right-3 top-1 px-2"
                                                         role="menu" 
                                                         aria-orientation="vertical" 
                                                         aria-labelledby="menu-button" 
@@ -339,7 +373,7 @@ onMounted(() =>
                                                     </div>
                                                 </transition>
                                             </div>
-                                            <div class="flex flex-col gap-2 pr-2">
+                                            <div class="flex flex-col gap-2 pr-2 items-start">
                                                 <div class="flex gap-1">
                                                     <span class="font-bold">
                                                         Ramal:
@@ -378,7 +412,7 @@ onMounted(() =>
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="flex flex-row items-center justify-center w-full h-48 rounded-lg">
+                        <div v-else class="flex flex-row items-center justify-center w-full h-48 rounded-lg mb-10">
                             Nenhum resultado encontrado.
                         </div>
                     </div>
@@ -392,6 +426,57 @@ onMounted(() =>
                         </div>
                     </div>
                 </div>
+                <dialog-modal
+                    :show="show_modal_delete"
+                    @close="show_modal_delete = !show_modal_delete"
+                >
+                    <template
+                        #title
+                        v-if="!loading"
+                    >
+                        Deletar Ramal
+                    </template>
+                    <template #content>
+                        <div
+                            v-if="loading"
+                            class="flex flex-col items-center justify-center w-full h-full"
+                        >
+                            <loading-circle
+                                :settings="'animate-spin fill-current text-gray-500'"
+                                :icon_height="30" :icon_width="30"
+                            />
+                            <p class="mt-4">
+                                Deletando ramal, aguarde um momento...
+                            </p>
+                        </div>
+                        <div
+                            v-else-if="!loading"
+                        >
+                            Tem certeza que deseja deletar o ramal:
+                            <span class="font-semibold">
+                                {{selected_extension.number}} ?
+                            </span>
+                        </div>
+                    </template>
+                    <template
+                        #footer
+                        v-if="!loading"
+                    >
+                        <div class="flex flex-row items-end justify-end">
+                            <secondary-button
+                                @click="show_modal_delete = !show_modal_delete"
+                            >
+                                Cancelar
+                            </secondary-button>
+                            <base-button
+                                @click="confirmDelete()"
+                                class="inline-flex items-center px-4 py-2 ml-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-blue-500 border border-blue-500 rounded-md shadow-sm hover:bg-blue-700 hover:border-blue-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 active:bg-gray-50 disabled:opacity-25"
+                            >
+                                Confirmar
+                            </base-button>
+                        </div>
+                    </template>
+                </dialog-modal>
             </margin-layout>
         </template>
     </app-layout>

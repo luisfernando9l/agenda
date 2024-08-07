@@ -22,9 +22,14 @@ class DepartmentService
 
     public function destroy($department)
     {
+        return $department->delete();
+    }
+
+    public function canDeleteDepartment($department)
+    {
         $users = User::where('department_id', $department->id)->count();
         if($users <= 0){
-            return $department->delete();
+            return true;
         }
         return false;
     }

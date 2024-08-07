@@ -9,14 +9,6 @@ use App\Models\User;
 class ExtensionPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Extension $extension): bool
@@ -44,22 +36,6 @@ class ExtensionPolicy
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Extension $extension): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Extension $extension): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Extension $extension): bool
     {
         //
     }

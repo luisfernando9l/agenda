@@ -8,29 +8,14 @@ import LoadingCircle from '@/Components/Icons/LoadingCircle.vue'
 import MarginLayout from '@/Components/Utilities/MarginLayout.vue'
 import ErrorMessage from '@/Components/Utilities/ErrorMessage.vue'
 import ArrowLeft from '@/Components/Icons/ArrowLeft.vue'
-import { ref, onMounted } from 'vue'
-import { useForm, usePage } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
-const page = usePage()
-
-const title = ref('Atualizar Departamento')
+const title = ref('Visualizar Ramal')
 let alerts = ref([])
 
 const props = defineProps({
-    department: { type: Object, default: true }
+    extension: { type: Object, default: true }
 })
-
-const form = useForm({
-    name: '',
-    department_id: '',
-})
-
-const submit = () => {
-    clearAlerts()
-    form.put(route('department.update', { department: props.department.data.id } ),{
-        preserveScroll: true
-    })
-}
 
 const getFlashAlerts =() => {
     if(page.props.flash.error){
@@ -49,12 +34,6 @@ const destroyAlert = (index) => {
 const clearAlerts = () => {
     alerts.value = []
 }
-
-onMounted(() => {
-    getFlashAlerts()
-    form.id = props.department.data.id
-    form.name = props.department.data.name
-})
 </script>
 <template>
     <app-layout>
@@ -87,10 +66,7 @@ onMounted(() => {
         </template>
         <template #body>
             <margin-layout>
-                <form
-                    @submit.prevent="submit"
-                    class="mb-20"
-                >
+                <div class="mb-20">
                     <div
                         v-if="alerts"
                         class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto"
@@ -102,51 +78,67 @@ onMounted(() => {
                             />
                         </div>
                     </div>
-                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto">
+                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-2 w-full max-w-[1000px] mx-auto">
                         <div class="w-full">
                             <base-label
-                                id="name"
-                                value="Nome do Departamento"
+                                id="number"
+                                value="Número do ramal"
                             />
                             <base-input
-                                :disabled="form.processing"
-                                v-model="form.name"
-                                :value="form.name"
+                                disabled
+                                v-model="extension.data.number"
+                                :value="extension.data.number"
                                 type="text"
-                                id="name"
-                                placeholder="Nome do Departamento"
-                                :class="form.errors.name ? 'border border-red-500' : ''"
+                                id="number"
+                                placeholder="Número do ramal"
                             />
-                            <div class="h-2">
-                                <error-message
-                                    v-if="form.errors.name"
-                                    :message="form.errors.name"
-                                />
-                            </div>
+                        </div>
+                        <div class="w-full">
+                            <base-label
+                                id="created_at"
+                                value="Criado em"
+                            />
+                            <base-input
+                                disabled
+                                v-model="extension.data.created_at"
+                                :value="extension.data.created_at"
+                                type="text"
+                                id="created_at"
+                                placeholder="Criado em"
+                            />
                         </div>
                     </div>
-                    <div class="w-full max-w-[1000px] mx-auto flex justify-end">
-                        <base-button
-                            v-if="!form.processing"
-                            type="submit"
-                            :class="{ 'opacity-50': form.processing }"
-                            :disabled="form.processing"
-                        >
-                            Salvar
-                        </base-button>
-                        <base-button
-                            v-else
-                            :class="{ 'opacity-50': form.processing }"
-                            :disabled="form.processing"
-                        >
-                            <LoadingCircle
-                                :icon_width="20"
-                                :icon_height="20"
-                                :settings="'fill-current animate-spin'"
+                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pb-4 w-full max-w-[1000px] mx-auto">
+                        <div class="w-full">
+                            <base-label
+                                id="user_owner"
+                                value="Atribuído para"
                             />
-                        </base-button>
+                            <base-input
+                                disabled
+                                v-model="extension.data.user_owner.name"
+                                :value="extension.data.user_owner.name"
+                                type="text"
+                                id="user_owner"
+                                placeholder="Atribuído para"
+                            />
+                        </div>
+                        <div class="w-full">
+                            <base-label
+                                id="department"
+                                value="Departamento"
+                            />
+                            <base-input
+                                disabled
+                                v-model="extension.data.user_owner.department"
+                                :value="extension.data.user_owner.department"
+                                type="text"
+                                id="department"
+                                placeholder="Departamento"
+                            />
+                        </div>
                     </div>
-                </form>
+                </div>
             </margin-layout>
         </template>
     </app-layout>

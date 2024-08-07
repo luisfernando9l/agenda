@@ -88,6 +88,9 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         // Gate::authorize('updateDepartment', $user);
+        if(!$this->service->canDeleteDepartment($department)){
+            return redirect()->back()->withError("Não é possível apagar um departamento com usuários");
+        }
         if($this->service->destroy($department)){
             return redirect()->route('departments')->withSuccess("Departamento deletado com sucesso");
         }

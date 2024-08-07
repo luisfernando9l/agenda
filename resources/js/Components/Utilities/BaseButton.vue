@@ -15,9 +15,9 @@ const classButton = computed(() =>
 )
 </script>
 <template>
-    <button 
-        :type="type" 
-        :disabled="disabled" 
+    <button
+        :type="type"
+        :disabled="disabled"
         :class="classButton"
     >
         <slot></slot>

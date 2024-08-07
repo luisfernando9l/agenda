@@ -9,6 +9,7 @@ import BaseAlerts from "@/Components/Utilities/BaseAlerts.vue"
 import LoadingCircle from '@/Components/Icons/LoadingCircle.vue'
 import MarginLayout from '@/Components/Utilities/MarginLayout.vue'
 import ErrorMessage from '@/Components/Utilities/ErrorMessage.vue'
+import ArrowLeft from '@/Components/Icons/ArrowLeft.vue'
 
 const title = ref('Criar Departamento')
 let alerts = ref([])
@@ -37,16 +38,37 @@ const clearAlerts = () => {
     <app-layout>
         <template #header>
             <margin-layout>
-                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-3">
-                    <h3 class="text-3xl font-semibold text-gray-500">
-                        {{title}}
-                    </h3>
+                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-2">
+                    <div class="flex flex-row w-full justify-between">
+                        <inertia-link
+                            :href="route('extensions')"
+                        >
+                            <base-button
+                                aria-label="new_button"
+                                class="md:w-16 font-semibold"
+                                type="button"
+                            >
+                                <arrow-left
+                                    :icon_height="20"
+                                    :icon_width="20"
+                                    :color="'fill-current text-white'"
+                                />
+                            </base-button>
+                        </inertia-link>
+                        <h3 class="text-3xl font-semibold text-gray-500 items-center">
+                            {{title}}
+                        </h3>
+                        <div></div>
+                    </div>
                 </div>
             </margin-layout>
         </template>
         <template #body>
             <margin-layout>
-                <form @submit.prevent="submit">
+                <form
+                    @submit.prevent="submit"
+                    class="mb-20"
+                >
                     <div
                         v-if="alerts"
                         class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto"
@@ -98,7 +120,7 @@ const clearAlerts = () => {
                             <LoadingCircle
                                 :icon_width="20"
                                 :icon_height="20"
-                                :color="'fill-current animate-spin'"
+                                :settings="'fill-current animate-spin'"
                             />
                         </base-button>
                     </div>

@@ -20,7 +20,7 @@ const sideBarItemsClass = computed(() => {
 
 </script>
 <template>
-    <nav class="bg-cyan-200 w-full h-full justify-between flex flex-col shadow-lg">
+    <nav class="bg-gray-50 w-full h-full justify-between flex flex-col shadow-lg">
         <div class="flex flex-col justify-between flex-1 w-full">
             <div class="h-full flex flex-col w-full">
                 <div class="h-24 flex justify-center items-center py-4 mt-4 border-b-1 border-gray-300 shadow">
