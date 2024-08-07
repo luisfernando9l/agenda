@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
 
         //senha dos usuários: password
         User::create(['id' => 1,'name'=> 'Admin', 'email' =>'admin@xteste.net', 'department_id' => 1,'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
-        User::create(['id' => 2,'name'=> 'Usuário', 'email' =>'user@xteste.net', 'department_id' => 3,'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
-        User::create(['id' => 2,'name'=> 'Usuário Dois', 'email' =>'userdois@xteste.net', 'department_id' =>NULL,'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
+        User::create(['id' => 2,'name'=> 'Usuário', 'email' =>'user@xteste.net', 'department_id' => 2,'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
+        User::create(['id' => 3,'name'=> 'Usuário Dois', 'email' =>'userdois@xteste.net', 'department_id' => 3,'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
