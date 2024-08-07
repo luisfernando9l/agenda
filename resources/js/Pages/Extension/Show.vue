@@ -9,7 +9,9 @@ import MarginLayout from '@/Components/Utilities/MarginLayout.vue'
 import ErrorMessage from '@/Components/Utilities/ErrorMessage.vue'
 import ArrowLeft from '@/Components/Icons/ArrowLeft.vue'
 import { ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
 
+const page = usePage()
 const title = ref('Visualizar Ramal')
 let alerts = ref([])
 

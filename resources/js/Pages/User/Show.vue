@@ -4,17 +4,19 @@ import BaseLabel from "@/Components/Utilities/BaseLabel.vue"
 import BaseInput from "@/Components/Utilities/BaseInput.vue"
 import BaseButton from "@/Components/Utilities/BaseButton.vue"
 import BaseAlerts from "@/Components/Utilities/BaseAlerts.vue"
+import LoadingCircle from '@/Components/Icons/LoadingCircle.vue'
 import MarginLayout from '@/Components/Utilities/MarginLayout.vue'
+import ErrorMessage from '@/Components/Utilities/ErrorMessage.vue'
 import ArrowLeft from '@/Components/Icons/ArrowLeft.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 
 const page = usePage()
-const title = ref('Visualizar Departamento')
+const title = ref('Editar Usuário')
 let alerts = ref([])
 
 const props = defineProps({
-    department: { type: Object, default: true }
+    user: { type: Object, default: true }
 })
 
 const getFlashAlerts =() => {
@@ -34,6 +36,10 @@ const destroyAlert = (index) => {
 const clearAlerts = () => {
     alerts.value = []
 }
+
+onMounted(() => {
+    getFlashAlerts()
+})
 </script>
 <template>
     <app-layout>
@@ -42,7 +48,7 @@ const clearAlerts = () => {
                 <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-2">
                     <div class="flex flex-row w-full justify-between">
                         <inertia-link
-                            :href="route('departments')"
+                            :href="route('users')"
                         >
                             <base-button
                                 aria-label="new_button"
@@ -78,50 +84,50 @@ const clearAlerts = () => {
                             />
                         </div>
                     </div>
-                    <div class="flex xs:flex-col md:flex-col justify-center items-center gap-2 pt-10 pb-4 w-full max-w-[1000px] mx-auto">
+                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-10 pb-2 w-full max-w-[1000px] mx-auto">
                         <div class="w-full">
                             <base-label
                                 id="name"
-                                value="Nome do Departamento"
+                                value="Nome Completo"
                             />
                             <base-input
                                 disabled
-                                v-model="department.data.id"
-                                :value="department.data.id"
+                                v-model="props.user.data.name"
+                                :value="props.user.data.name"
                                 type="text"
                                 id="name"
-                                placeholder="Nome do Departamento"
+                                placeholder="Nome Completo"
                             />
                         </div>
-                        <div class="w-full flex xs:flex-col sm:flex-row gap-2">
-                            <div class="w-full">
-                                <base-label
-                                    id="created_by"
-                                    value="Criado por"
-                                />
-                                <base-input
-                                    disabled
-                                    v-model="department.data.created_by.name"
-                                    :value="department.data.created_by.name"
-                                    type="text"
-                                    id="created_by"
-                                    placeholder="Criado por"
-                                />
-                            </div>
-                            <div class="w-full">
-                                <base-label
-                                    id="created_at"
-                                    value="Data da Criação"
-                                />
-                                <base-input
-                                    disabled
-                                    v-model="department.data.created_at"
-                                    :value="department.data.created_at"
-                                    type="text"
-                                    id="created_at"
-                                    placeholder="Data da Criação"
-                                />
-                            </div>
+                        <div class="w-full">
+                            <base-label
+                                id="email"
+                                value="E-mail"
+                            />
+                            <base-input
+                                disabled
+                                v-model="props.user.data.email"
+                                :value="props.user.data.email"
+                                type="text"
+                                id="email"
+                                placeholder="E-mail"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex xs:flex-col md:flex-row justify-center items-center gap-2 pt-2 pb-2 w-full max-w-[1000px] mx-auto">
+                        <div class="w-full">
+                            <base-label
+                                id="department_id"
+                                value="Departamento"
+                            />
+                            <base-input
+                                disabled
+                                v-model="props.user.data.department"
+                                :value="props.user.data.department"
+                                type="text"
+                                id="department_id"
+                                placeholder="-"
+                            />
                         </div>
                     </div>
                 </div>
