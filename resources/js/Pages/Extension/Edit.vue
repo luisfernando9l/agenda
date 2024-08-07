@@ -56,7 +56,7 @@ onMounted(() => {
     getFlashAlerts()
     form.id = props.extension.data.id
     form.number = props.extension.data.number
-    form.user_id = props.extension.data.user_owner.id
+    form.user_id = props.extension.data.user_owner != '-' ? '' : props.extension.data.user_owner.id
 })
 </script>
 <template>
@@ -143,7 +143,6 @@ onMounted(() => {
                                 <option
                                     value=""
                                     selected
-                                    disabled
                                 >
                                     Selecione um usuário
                                 </option>

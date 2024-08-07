@@ -138,7 +138,6 @@ onMounted(() =>
                                 <option
                                     value=""
                                     selected
-                                    disabled
                                 >
                                     Selecione um usuário
                                 </option>

@@ -78,6 +78,7 @@ class DepartmentController extends Controller
         // Gate::authorize('updateDepartment', $user);
         if($this->service->update($request, $department)){
             return redirect()->route('departments')->withSuccess("Departamento criado com sucesso");
+            return response('', 500);
         }
         return redirect()->back()->withError("Erro ao atualizar departamento");
     }

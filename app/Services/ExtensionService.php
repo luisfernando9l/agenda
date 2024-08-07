@@ -29,7 +29,8 @@ class ExtensionService
     public function getExtensions($request)
     {
         return Extension::query()
-            ->join('users', 'extensions.user_id', 'users.id')
+            ->leftJoin('users', 'extensions.user_id', 'users.id')
+            ->leftJoin('departments', 'users.department_id', 'departments.id')
             ->when($request->input('number'), function ($query, $number) {
                 $query->where('extensions.number', 'like', "%{$number}%");
             })
@@ -37,12 +38,12 @@ class ExtensionService
                 $query->where('users.name', 'like', "%{$owner}%");
             })
             ->when($request->input('department'), function ($query, $department) {
-                $query->where('users.department_id', function ($query) use ($department) {
-                    $query->select('id')
-                        ->from('departments')
-                        ->where('name', 'like', "%{$department}%");
+                $query->where(function ($query) use ($department) {
+                    $query->where('departments.name', 'like', "%{$department}%")
+                        ->orWhereNull('departments.name');
                 });
             })
+            ->select('extensions.*')
             ->paginate(10);
     }
 }

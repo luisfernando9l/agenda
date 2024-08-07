@@ -23,7 +23,7 @@ class StoreExtensionRequest extends FormRequest
     {
         return [
             'number' => ['required', 'string', 'max:20', 'unique:extensions,number'],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }

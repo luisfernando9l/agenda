@@ -29,7 +29,7 @@ class UpdateExtensionRequest extends FormRequest
                 'max:20',
                 Rule::unique('extensions', 'number')->ignore($this->id)
             ],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
         ];
     }
 }
