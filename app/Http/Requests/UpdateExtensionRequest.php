@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Extension;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +23,12 @@ class UpdateExtensionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => ['required', 'string', 'max:255', Rule::unique(Extension::class)->ignore($this->id)],
+            'number' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('extensions', 'number')->ignore($this->id)
+            ],
             'user_id' => ['required', 'exists:users,id'],
         ];
     }

@@ -16,7 +16,9 @@ class ExtensionService
 
     public function update($request, $extension)
     {
-        return $extension->update($request->all());
+        $extension->number = $request->number;
+        $extension->user_id = $request->user_id ?? NULL;
+        return $extension->update();
     }
 
     public function destroy($extension)
@@ -27,10 +29,20 @@ class ExtensionService
     public function getExtensions($request)
     {
         return Extension::query()
-            ->when($request->input('number'), function($query, $number){
-                $query->where('number', 'like', "%{$number}%");
+            ->join('users', 'extensions.user_id', 'users.id')
+            ->when($request->input('number'), function ($query, $number) {
+                $query->where('extensions.number', 'like', "%{$number}%");
             })
-            //verificar user
+            ->when($request->input('owner'), function ($query, $owner) {
+                $query->where('users.name', 'like', "%{$owner}%");
+            })
+            ->when($request->input('department'), function ($query, $department) {
+                $query->where('users.department_id', function ($query) use ($department) {
+                    $query->select('id')
+                        ->from('departments')
+                        ->where('name', 'like', "%{$department}%");
+                });
+            })
             ->paginate(10);
     }
 }

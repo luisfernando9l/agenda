@@ -77,19 +77,33 @@ onMounted(() =>
     <app-layout>
         <template #header>
             <margin-layout>
-                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-3">
-                    <h3 class="text-3xl font-semibold text-gray-500">
-                        {{title}}
-                    </h3>
+                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-2">
+                    <div class="flex flex-col md:flex-row w-full justify-between">
+                        <inertia-link
+                            :href="route('department.create')"
+                            class="xs:w-full md:w-auto justify-start items-start"
+                        >
+                            <base-button
+                                aria-label="new_button"
+                                class="md:w-20 font-semibold"
+                                type="button"
+                            >
+                                Novo
+                            </base-button>
+                        </inertia-link>
+                        <h3 class="text-3xl font-semibold text-gray-500 items-center">
+                            {{title}}
+                        </h3>
+                        <div></div>
+                    </div>
                 </div>
             </margin-layout>
         </template>
         <template #body>
             <margin-layout>
                 <div class="flex xs:flex-col md:flex-row mt-4">
-                    <div class="flex flex-row py-1 xs:w-full sm:w-full md:w-full lg:w-3/12 xl:w-3/12 lg:pr-1 xl:pr-1">
+                    <div class="flex flex-col py-1 xs:w-full sm:w-full md:w-full lg:w-3/12 xl:w-3/12 lg:pr-1 xl:pr-1">
                         <base-label
-                            class="sr-only"
                             for="name_search"
                         >
                             Nome
@@ -100,7 +114,7 @@ onMounted(() =>
                             placeholder="Nome"
                         />
                     </div>
-                    <div class="flex flex-col items-start float-right py-1 lg:pl-2 xl:pl-2">
+                    <div class="flex flex-col justify-end float-right py-1 lg:pl-2 xl:pl-2">
                         <base-button
                             @click="getDepartments()"
                             class="w-full md:w-fit"

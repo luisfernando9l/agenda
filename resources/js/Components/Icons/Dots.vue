@@ -5,7 +5,6 @@ defineProps({
     color: { required: false, type: String, default: '' }  
 })
 </script>
-
 <template>
     <svg 
         :class="color" 

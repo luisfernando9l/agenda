@@ -2,7 +2,8 @@
 import SystemExit from '@/Components/Icons/SystemExit.vue'
 import ProfileUser from '@/Components/Icons/ProfileUser.vue'
 import { router, usePage } from '@inertiajs/vue3';
-import { ref, computed, onMounted } from 'vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue'
+import { computed } from 'vue';
 
 const page = usePage()
 
@@ -27,7 +28,11 @@ const sideBarItemsClass = computed(() => {
                         href="#"
                         aria-label="logo"
                     >
-                        LOGO
+                    <ApplicationLogo
+                        :icon_width="150"
+                        :icon_height="80"
+                        class="fill-current text-gray-500"
+                    />
                     </a>
                 </div>
                 <div
@@ -62,7 +67,7 @@ const sideBarItemsClass = computed(() => {
                                     :settings="'fill-current text-gray-500'" 
                                 />
                             </div>
-                            <div class="flex flex-col truncate">
+                            <div class="flex flex-col truncate mt-1">
                                 <span class="text-black opacity-60 overflow-ellipsis overflow-hidden font-semibold text-sm" >
                                     {{page.props.auth.user.name}}
                                 </span>

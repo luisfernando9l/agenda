@@ -46,7 +46,7 @@ class ExtensionController extends Controller
     {
         // Gate::authorize('newExtension, User::class);
         if($this->service->store($request)){
-            return redirect()->route('extensions')->withSuccess("Ramal criado com sucesso");
+            return redirect()->route('extensions')->withSuccess("Ramal criado com sucesso!");
         }
         return redirect()->back()->withError("Erro ao criar ramal");
     }
@@ -68,7 +68,9 @@ class ExtensionController extends Controller
     public function edit(Extension $extension)
     {
         // Gate::authorize('updateExtension', $user);
+        $users = User::all();
         return Inertia::render('Extension/Edit')->with([
+            'users' => $users,
             'extension' => ExtensionResource::make($extension)
         ]);
     }
@@ -80,7 +82,7 @@ class ExtensionController extends Controller
     {
         // Gate::authorize('updateExtension', $user);
         if($this->service->update($request, $extension)){
-            return redirect()->route('extensions')->withSuccess("Ramal criado com sucesso");
+            return redirect()->route('extensions')->withSuccess("Ramal atualizado com sucesso!");
         }
         return redirect()->back()->withError("Erro ao atualizar ramal");
     }
@@ -92,7 +94,7 @@ class ExtensionController extends Controller
     {
         // Gate::authorize('updateExtension', $user);
         if($this->service->destroy($extension)){
-            return redirect()->route('extensions')->withSuccess("Ramal deletado com sucesso");
+            return redirect()->route('extensions')->withSuccess("Ramal deletado com sucesso!");
         }
         return redirect()->back()->withError("Erro ao deletar ramal");
     }

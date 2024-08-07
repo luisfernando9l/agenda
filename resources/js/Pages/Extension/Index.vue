@@ -86,10 +86,25 @@ onMounted(() =>
     <app-layout>
         <template #header>
             <margin-layout>
-                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-3">
-                    <h3 class="text-3xl font-semibold text-gray-500">
-                        {{title}}
-                    </h3>
+                <div class="flex xs:justify-start md:justify-center pb-6 xs:-ml-0.5 md:ml-0 mt-10 mb-2">
+                    <div class="flex flex-col md:flex-row w-full justify-between">
+                        <inertia-link
+                            :href="route('extension.create')"
+                            class="xs:w-full md:w-auto justify-start items-start"
+                        >
+                            <base-button
+                                aria-label="new_button"
+                                class="md:w-20 font-semibold"
+                                type="button"
+                            >
+                                Novo
+                            </base-button>
+                        </inertia-link>
+                        <h3 class="text-3xl font-semibold text-gray-500 items-center">
+                            {{title}}
+                        </h3>
+                        <div></div>
+                    </div>
                 </div>
             </margin-layout>
         </template>

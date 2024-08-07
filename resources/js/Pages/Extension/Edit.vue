@@ -11,22 +11,23 @@ import { ref, onMounted } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 
 const page = usePage()
-const title = ref('Criar Ramal')
+const title = ref('Editar Ramal')
 let alerts = ref([])
 
 const props = defineProps({
-    users: { type: Object, required: true }
+    users: { type: Object, required: true },
+    extension: { type: Object, default: true }
 })
 
 const form = useForm({
+    id: '',
     number: '',
-    extension_id: '',
-    user_id: '',
+    user_id: ''
 })
 
 const submit = () => {
     clearAlerts()
-    form.post(route('extension.store'), {
+    form.put(route('extension.update', props.extension.data.id), {
         preserveScroll: true,
     })
     getFlashAlerts()
@@ -50,9 +51,12 @@ const clearAlerts = () => {
     alerts.value = []
 }
 
-onMounted(() =>
+onMounted(() => {
     getFlashAlerts()
-)
+    form.id = props.extension.data.id
+    form.number = props.extension.data.number
+    form.user_id = props.extension.data.user_owner.id
+})
 </script>
 <template>
     <app-layout>
@@ -110,6 +114,7 @@ onMounted(() =>
                                 id="user_id"
                                 :disabled="props.users.length === 0 || form.processing"
                                 v-model="form.user_id"
+                                :selected="form.user_id"
                                 :class="form.errors.user_id ? 'border border-red-500' : ''"
                                 class="placeholder-gray-500 border-gray-300 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline disabled:bg-gray-100 disabled:placeholder-gray-500"
                             >

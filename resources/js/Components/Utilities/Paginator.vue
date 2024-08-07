@@ -109,7 +109,6 @@ const pages = computed(() => {
 })
 </script>
 <template>
-    <!-- Para dados onde a paginacao ja vem pronta do back e possui filtros -->
     <div 
         v-if="last_page > 1" 
         id="static_paginator"
@@ -117,7 +116,7 @@ const pages = computed(() => {
         <div class="w-full flex items-center justify-between static ">
             <div class="h-max flex w-full justify-center static">
                 <span>
-                    {{$t('Showing')}} {{ from }} {{$t('to')}} {{ to }} {{$t('of')}} {{ total }} {{$t('results')}}
+                    Mostrando {{ from }} a {{ to }} de {{ total }} resultados
                 </span>
             </div>
         </div>
@@ -129,7 +128,7 @@ const pages = computed(() => {
                         :icon_width="10" 
                         :settings="'fill-current text-blue-600 mr-1'" 
                     />
-                    {{$t('Previous')}}
+                    Anterior
                 </span>
                 <span 
                     v-for="(link, index) in pages" 
@@ -148,11 +147,11 @@ const pages = computed(() => {
                     class="flex items-center justify-center px-4 py-3 mb-1 text-sm leading-4 bg-white border cursor-pointer hover:bg-white focus:text-indigo-500" 
                     :class="{ 'flex justify-center items-center mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border': page_number === getLinks().length}"
                 >
-                    {{$t('Next')}}
-                    <double-arrow-right  
-                        :icon_height="10" 
-                        :icon_width="10" 
-                        :settings="'fill-current text-blue-600 ml-1'" 
+                    Próximo
+                    <double-arrow-right
+                        :icon_height="10"
+                        :icon_width="10"
+                        :settings="'fill-current text-blue-600 ml-1'"
                     />
                 </span>
             </div>

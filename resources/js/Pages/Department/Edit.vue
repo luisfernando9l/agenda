@@ -7,8 +7,10 @@ import BaseAlerts from "@/Components/Utilities/BaseAlerts.vue"
 import LoadingCircle from '@/Components/Icons/LoadingCircle.vue'
 import MarginLayout from '@/Components/Utilities/MarginLayout.vue'
 import ErrorMessage from '@/Components/Utilities/ErrorMessage.vue'
-import { useForm } from '@inertiajs/vue3'
 import { ref, onMounted } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
+
+const page = usePage()
 
 const title = ref('Atualizar Departamento')
 let alerts = ref([])
@@ -29,6 +31,16 @@ const submit = () => {
     })
 }
 
+const getFlashAlerts =() => {
+    if(page.props.flash.error){
+        alerts.value.push({type: "error", message: page.props.flash.error})
+    }else if(page.props.flash.success){
+        alerts.value.push({type: "success", message: page.props.flash.success})
+    }else{
+        clearAlerts()
+    }
+}
+
 const destroyAlert = (index) => {
     alerts.value.splice(index, 1)
 }
@@ -38,6 +50,7 @@ const clearAlerts = () => {
 }
 
 onMounted(() => {
+    getFlashAlerts()
     form.id = props.department.data.id
     form.name = props.department.data.name
 })
